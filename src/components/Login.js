@@ -9,6 +9,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { USER_AVATAR, NETFLIX_BACKGROUND } from "../utils/constant";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -47,7 +48,7 @@ const Login = () => {
           if (fullName.current.value) {
             updateProfile(user, {
               displayName: fullName.current.value,
-              photoURL: "https://mockmind-api.uifaces.co/content/cartoon/32.jpg",
+              photoURL: USER_AVATAR,
             })
               .then(() => {
                 const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -85,7 +86,7 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/fc164b4b-f085-44ee-bb7f-ec7df8539eff/d23a1608-7d90-4da1-93d6-bae2fe60a69b/IN-en-20230814-popsignuptwoweeks-perspective_alpha_website_large.jpg"
+          src={NETFLIX_BACKGROUND}
           alt="background"
         />
       </div>

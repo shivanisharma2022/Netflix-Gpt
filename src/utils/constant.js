@@ -7,4 +7,12 @@ export const NETFLIX_BACKGROUND =
 export const USER_AVATAR =
   "https://occ-0-6247-2164.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABdpkabKqQAxyWzo6QW_ZnPz1IZLqlmNfK-t4L1VIeV1DY00JhLo_LMVFp936keDxj-V5UELAVJrU--iUUY2MaDxQSSO-0qw.png?r=e6e";
 
-  //export const DEFAULT_USER_AVATAR = "https://mockmind-api.uifaces.co/content/cartoon/32.jpg"
+export const API_OPTIONS = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMjg3ZGM5NjlhZTE0ZTIzMjQ1N2U5MmE5YjRlNjJmZSIsIm5iZiI6MTc4MzEwMTg5OC41Nzc5OTk4LCJzdWIiOiI2YTQ3ZjljYWIzNjk4ZmVjODc4OWYzZTciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.u02sEL4nx36ZZH1aWytDgWjDAMJVJ1mSjaED5FYSpMk",
+  },
+};
+

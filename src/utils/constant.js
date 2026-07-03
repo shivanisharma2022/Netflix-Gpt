@@ -16,3 +16,4 @@ export const API_OPTIONS = {
   },
 };
 
+export const IMG_CDN_URL = "/tmdb-images/t/p/w500";

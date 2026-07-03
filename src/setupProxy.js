@@ -8,4 +8,14 @@ module.exports = function (app) {
       changeOrigin: true,
     }),
   );
+
+  // Proxy poster images through localhost to avoid ad-blocker blocking image.tmdb.org
+  app.use(
+    "/tmdb-images",
+    createProxyMiddleware({
+      target: "https://image.tmdb.org",
+      changeOrigin: true,
+      pathRewrite: { "^/tmdb-images": "" },
+    }),
+  );
 };

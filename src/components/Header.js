@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../utils/userSlice";
 import { toast } from "react-toastify";
-
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser } from "../utils/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,14 +17,26 @@ const Header = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
-        navigate("/");
         toast.success("Signed out successfully");
       })
       .catch((error) => {
-        console.log(error);
         toast.error("Failed to sign out");
       });
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between items-center">
       <img

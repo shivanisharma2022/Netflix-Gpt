@@ -7,14 +7,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const toggleSignInForm = () => {
@@ -54,13 +52,10 @@ const Login = () => {
               .then(() => {
                 const { uid, email, displayName, photoURL } = auth.currentUser;
                 dispatch(addUser({ uid, email, displayName, photoURL }));
-                navigate("/browse");
               })
               .catch((error) => {
                 setErrorMessage(error.message);
               });
-
-            console.log("User created:", user);
           }
         })
         .catch((error) => {
@@ -77,8 +72,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("User signed in:", user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;

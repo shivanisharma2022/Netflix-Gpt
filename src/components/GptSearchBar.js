@@ -1,13 +1,14 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import languageConstant from "../utils/languageConstant";
 import { useRef } from "react";
 // import openai from "../utils/openAI";
 import { API_OPTIONS } from "../utils/constant";
+import { addGptMovies } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const lang = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
-
+  const dispatch = useDispatch();
   const searchMovieTMDB = async (movie) => {
     try {
       const data = await fetch(
@@ -46,11 +47,11 @@ const GptSearchBar = () => {
     //   throw new Error("No search results found. Please try again.");
 
     // console.log(gptSearchResults.choices?.[0]?.message?.content);
-    // 3 Idiots, Hera Pheri, Bhool Bhulaiyaa, Welcome, Golmaal
+    // 3 Idiots, Hera Pheri, Bhool Bhulaiyaa, Golmaal, Cocktail
 
     // const getMovies = gptSearchResults.choices?.[0]?.message?.content.split(",");
 
-    const MOCK_GPT_MOVIES = "3 Idiots, Hera Pheri, Bhool Bhulaiyaa, Welcome, Golmaal, Cocktail";
+    const MOCK_GPT_MOVIES = "3 Idiots, Hera Pheri, Bhool Bhulaiyaa, Golmaal, Cocktail";
 
     const getMovies = MOCK_GPT_MOVIES.split(",").map((movie) => movie.trim());
     console.log("Mock GPT movies:", getMovies);
@@ -66,6 +67,8 @@ const GptSearchBar = () => {
       tmdbMovies.push(results);
     }
     console.log(tmdbMovies);
+
+    dispatch(addGptMovies({movieNames: getMovies, movieResults:tmdbMovies}));
   };
 
   return (

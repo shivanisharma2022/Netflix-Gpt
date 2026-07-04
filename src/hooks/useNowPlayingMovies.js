@@ -34,7 +34,8 @@ const useNowPlayingMovies = () => {
   };
 
   useEffect(() => {
-    !nowPlayingMovies && getNowPlayingMovies();
+    // getNowPlayingMovies() this is wrong way, because it will make a api call again and again, if the data is already present in the store
+    !nowPlayingMovies && getNowPlayingMovies(); // memoization, before re-rendering the component, check if the nowPlayingMovies is not null, if it is not null, then don't call the function again(why to make a api call again and again, if the data is already present in the store)
   }, []);
 };
 

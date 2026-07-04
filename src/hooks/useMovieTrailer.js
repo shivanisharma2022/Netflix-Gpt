@@ -20,7 +20,8 @@ const useMovieTrailer = (movieId) => {
   };
 
   useEffect(() => {
-    !trailerVideo && getMovieVideos();
+    // getMovieVideos() this is wrong way, because it will make a api call again and again, if the data is already present in the store
+    !trailerVideo && getMovieVideos(); // memoization, before re-rendering the component, check if the trailerVideo is not null, if it is not null, then don't call the function again(why to make a api call again and again, if the data is already present in the store)
   }, []);
 };
 

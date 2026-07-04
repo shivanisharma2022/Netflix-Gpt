@@ -32,7 +32,8 @@ const usePopularMovies = () => {
   };
 
   useEffect(() => {
-    !popularMovies && getPopularMovies();
+    // getPopularMovies() this is wrong way, because it will make a api call again and again, if the data is already present in the store
+    !popularMovies && getPopularMovies(); // memoization, before re-rendering the component, check if the popularMovies is not null, if it is not null, then don't call the function again(why to make a api call again and again, if the data is already present in the store)
   }, []);
 };
 

@@ -6,6 +6,8 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: "https://api.themoviedb.org",
       changeOrigin: true,
+      proxyTimeout: 60000,
+      timeout: 60000,
     }),
   );
 

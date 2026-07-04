@@ -12,10 +12,9 @@ import { toggleGptSearch } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const user = useSelector((store) => store.user);
   const lang = useSelector((store) => store.config.lang);
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
@@ -85,7 +84,7 @@ const Header = () => {
             className="text-white text-md font-bold bg-purple-600 px-4 py-2 rounded-md"
             onClick={handleGptSearchClick}
           >
-            Gpt Search
+            {showGptSearch ? "Homepage" : "Gpt Search"}
           </button>
           <img src={user.photoURL} alt="user-avatar" className="w-12 h-12" />
           <button

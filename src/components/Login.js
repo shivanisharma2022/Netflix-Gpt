@@ -82,19 +82,20 @@ const Login = () => {
     }
   };
   return (
-    <div>
+    <div className="relative min-h-screen overflow-hidden">
       <Header />
-      <div className="absolute">
+      <div className="fixed inset-0 -z-10">
         <img
           src={NETFLIX_BACKGROUND}
           alt="background"
+          className="w-full h-full object-cover"
         />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-3/12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-12 bg-black text-white rounded-lg bg-opacity-80"
+        className="w-[92%] max-w-md sm:max-w-lg md:max-w-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 sm:p-8 md:p-12 bg-black text-white rounded-lg bg-opacity-80"
       >
-        <h1 className="text-white text-3xl font-bold mb-4">
+        <h1 className="text-white text-2xl sm:text-3xl font-bold mb-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInForm && (

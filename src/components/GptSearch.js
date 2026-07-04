@@ -9,15 +9,17 @@ const GptSearch = () => {
 
   return (
     <div className="relative min-h-screen">
-      <div className="fixed inset-0 -z-10">
+      <div className="absolute inset-0">
         <img
           src={NETFLIX_BACKGROUND}
           alt="background"
           className="w-full h-full object-cover"
         />
       </div>
-      <GptSearchBar />
-      {hasResults && <GptMovieSuggestions />}
+      <div className="relative z-10">
+        <GptSearchBar />
+        {hasResults && <GptMovieSuggestions />}
+      </div>
     </div>
   );
 };

@@ -3,12 +3,11 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../utils/userSlice";
-import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser } from "../utils/userSlice";
 import { NETFLIX_LOGO, SUPPORTED_LANGUAGES } from "../utils/constant";
-import { toggleGptSearch } from "../utils/gptSlice";
+import { toggleGptSearch, resetGptState } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
@@ -20,14 +19,9 @@ const Header = () => {
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        dispatch(removeUser());
-        toast.success("Signed out successfully");
-      })
-      .catch(() => {
-        toast.error("Failed to sign out");
-      });
+    signOut(auth).then(() => {
+      dispatch(removeUser());
+    });
   };
 
   useEffect(() => {
@@ -45,6 +39,7 @@ const Header = () => {
         navigate("/browse");
       } else {
         dispatch(removeUser());
+        dispatch(resetGptState());
         navigate("/");
       }
     });

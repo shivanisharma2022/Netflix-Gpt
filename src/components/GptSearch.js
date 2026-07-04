@@ -9,7 +9,7 @@ const GptSearch = () => {
 
   return (
     <div className="relative min-h-screen">
-      <div className="absolute inset-0">
+      <div className="fixed inset-0 -z-10">
         <img
           src={NETFLIX_BACKGROUND}
           alt="background"

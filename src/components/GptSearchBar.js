@@ -3,7 +3,7 @@ import languageConstant from "../utils/languageConstant";
 import { useRef } from "react";
 // import openai from "../utils/openAI";
 import { API_OPTIONS } from "../utils/constant";
-import { addGptMovies } from "../utils/gptSlice";
+import { addGptMovies, clearGptMovies } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const lang = useSelector((store) => store.config.lang);
@@ -29,8 +29,20 @@ const GptSearchBar = () => {
     }
   };
 
+  const handleSearchChange = () => {
+    if (!searchText.current.value.trim()) {
+      dispatch(clearGptMovies());
+    }
+  };
+
   const handleGptSearchClick = async () => {
-    console.log(searchText.current.value);
+    const query = searchText.current.value.trim();
+    if (!query) {
+      dispatch(clearGptMovies());
+      return;
+    }
+
+    console.log(query);
 
     // const gptQuery =
     //   "I want you to act as a movie recommendation system and suggest some movies based on the user's query. " +
@@ -51,7 +63,8 @@ const GptSearchBar = () => {
 
     // const getMovies = gptSearchResults.choices?.[0]?.message?.content.split(",");
 
-    const MOCK_GPT_MOVIES = "3 Idiots, Hera Pheri, Bhool Bhulaiyaa, Golmaal, Cocktail";
+    const MOCK_GPT_MOVIES =
+      "3 Idiots, Bhool Bhulaiyaa, Golmaal, Cocktail, Housefull, Yeh Jawaani Hai Deewani, Love Aaj Kal, Tu Jhoothi Main Makkaar, Happy New Year, 2 States, Rocky Aur Rani Kii Prem Kahaani, Stree";
 
     const getMovies = MOCK_GPT_MOVIES.split(",").map((movie) => movie.trim());
     console.log("Mock GPT movies:", getMovies);
@@ -60,7 +73,6 @@ const GptSearchBar = () => {
     // As searchMovieTMDB is an async function, we need to wait for all the promises(5 in this case) to resolve using Promise.all
     // const tmdbMovies = await Promise.all(promiseArray);
 
-    // for each movie, search TMDB one at a time (avoids proxy timeouts)
     const tmdbMovies = [];
     for (const movie of getMovies) {
       const results = await searchMovieTMDB(movie);
@@ -68,7 +80,7 @@ const GptSearchBar = () => {
     }
     console.log(tmdbMovies);
 
-    dispatch(addGptMovies({movieNames: getMovies, movieResults:tmdbMovies}));
+    dispatch(addGptMovies({ movieNames: getMovies, movieResults: tmdbMovies }));
   };
 
   return (
@@ -80,6 +92,7 @@ const GptSearchBar = () => {
         <input
           ref={searchText}
           type="text"
+          onChange={handleSearchChange}
           className="p-3 sm:p-2 rounded-lg border border-gray-300 font-bold text-base sm:text-lg sm:col-span-10 bg-white text-black placeholder:text-gray-500 w-full"
           placeholder={languageConstant[lang].placeholder}
         />

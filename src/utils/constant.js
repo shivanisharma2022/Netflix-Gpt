@@ -12,7 +12,7 @@ export const API_OPTIONS = {
   headers: {
     accept: "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMjg3ZGM5NjlhZTE0ZTIzMjQ1N2U5MmE5YjRlNjJmZSIsIm5iZiI6MTc4MzEwMTg5OC41Nzc5OTk4LCJzdWIiOiI2YTQ3ZjljYWIzNjk4ZmVjODc4OWYzZTciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.u02sEL4nx36ZZH1aWytDgWjDAMJVJ1mSjaED5FYSpMk",
+      "Bearer " + process.env.REACT_APP_TMDB_KEY,
   },
 };
 
@@ -25,4 +25,4 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "french", name: "French" },
 ];
 
-export const OPENAI_API_KEY = "YOUR_OPENAI_API_KEY_HERE";
+export const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;

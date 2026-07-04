@@ -66,4 +66,16 @@
 
 
 # Project Setup
-- Before starting the project please add .env file and add TMDB and OPENAI KEY into it.
+- Before starting the project please add `.env` file and add TMDB and OPENAI KEY into it.
+
+### Notes (optional dev settings)
+Add these to your `.env` file for a smoother local development experience:
+
+```env
+# Don't auto-open Chrome on every compile — keep one tab on http://localhost:3000
+BROWSER=none
+
+# Helps file watching / hot reload on Windows
+WATCHPACK_POLLING=true
+FAST_REFRESH=true
+```

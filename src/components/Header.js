@@ -7,13 +7,18 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser } from "../utils/userSlice";
-import { NETFLIX_LOGO } from "../utils/constant";
+import { NETFLIX_LOGO, SUPPORTED_LANGUAGES } from "../utils/constant";
 import { toggleGptSearch } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const user = useSelector((store) => store.user);
+  const lang = useSelector((store) => store.config.lang);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -54,13 +59,31 @@ const Header = () => {
     dispatch(toggleGptSearch());
   };
 
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-50 flex justify-between items-center">
       <img className="w-44" src={NETFLIX_LOGO} alt="logo" />
       {user && (
-        <div className="flex items-center gap-4">
-          <button className="text-white text-md font-bold bg-purple-600 px-4 py-2 rounded-md"
-          onClick={handleGptSearchClick}
+        <div className="flex items-center gap-4 ">
+          {showGptSearch && (
+            <select
+              value={lang}
+              onChange={handleLanguageChange}
+              className="text-white text-md font-medium bg-zinc-900/80 border border-zinc-500 px-4 py-2 rounded-md cursor-pointer hover:border-white transition-colors outline-none"
+            >
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option key={language.identifier} value={language.identifier}>
+                  {language.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="text-white text-md font-bold bg-purple-600 px-4 py-2 rounded-md"
+            onClick={handleGptSearchClick}
           >
             Gpt Search
           </button>

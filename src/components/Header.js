@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser } from "../utils/userSlice";
 import { NETFLIX_LOGO } from "../utils/constant";
+import { toggleGptSearch } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,7 +30,14 @@ const Header = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          }),
+        );
         navigate("/browse");
       } else {
         dispatch(removeUser());
@@ -39,23 +47,24 @@ const Header = () => {
 
     // Stop listening to auth(login/logout) changes when Header is removed so that it doesn't listen to changes when other components are mounted
     // This is a good practice to avoid memory leaks and ensure that the subscription is removed when the component unmounts
-    return () => unsubscribe(); 
+    return () => unsubscribe();
   }, []);
+
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearch());
+  };
 
   return (
     <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-50 flex justify-between items-center">
-      <img
-        className="w-44"
-        src={NETFLIX_LOGO}
-        alt="logo"
-      />
+      <img className="w-44" src={NETFLIX_LOGO} alt="logo" />
       {user && (
         <div className="flex items-center gap-4">
-          <img
-            src={user.photoURL}
-            alt="user-avatar"
-            className="w-12 h-12"
-          />
+          <button className="text-white text-md font-bold bg-purple-600 px-4 py-2 rounded-md"
+          onClick={handleGptSearchClick}
+          >
+            Gpt Search
+          </button>
+          <img src={user.photoURL} alt="user-avatar" className="w-12 h-12" />
           <button
             onClick={handleSignOut}
             className="text-white text-md font-bold bg-red-600 px-4 py-2 rounded-md"
